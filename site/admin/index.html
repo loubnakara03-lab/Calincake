@@ -17,5 +17,26 @@
             onload="document.querySelector('.loading')?.remove()"
             onerror="document.body.insertAdjacentHTML('beforeend','<div id=error>Erreur : impossible de charger Decap CMS (unpkg).</div>')">
     </script>
+    <!-- Widget d'identité Netlify -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  (function () {
+    const params = new URLSearchParams(location.hash.replace(/^#/, '?'));
+    const invite = params.get('invite_token');
+
+    function accept() {
+      if (!invite || !window.netlifyIdentity) return;
+      window.netlifyIdentity.acceptInvite(invite, true)
+        .catch(console.error);
+    }
+
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', (user) => { if (!user) accept(); });
+      window.netlifyIdentity.init();
+      window.netlifyIdentity.on('login', () => { location.href = '/admin/'; });
+    }
+  })();
+</script>
+
   </body>
 </html>
