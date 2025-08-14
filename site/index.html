@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calincake – Can Cakes pour professionnels</title>
+  <meta name="description" content="Calincake : desserts en canette premium pour coffee shops, hôtellerie et distributeurs. Découvrez le concept, notre catalogue (4 goûts), et contactez-nous." />
+
+  <!-- Fonts (charte) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================
+       PALETTE (charte Calincake)
+       ========================== */
+    :root{
+      --brun-principal:#925027; /* texte fort, CTA */
+      --brun-moyen:#A9754F;     /* sous-titres, bordures subtiles */
+      --beige:#C29A78;          /* aplats secondaires */
+      --sable:#E3C19B;          /* surfaces UI claires */
+      --peche:#FADAB2;          /* badges/surbrillance */
+      --creme:#FEEDD3;          /* fond doux */
+      --blanc:#FFFFFF;          /* fond principal */
+      --noir:#000000;
+      --ink:#3b2a1f;            /* texte par défaut */
+
+      --radius:18px; --radius-lg:28px; --shadow:0 10px 30px rgba(0,0,0,.08); --maxw:1200px;
+      --font-head:'Baloo 2', cursive; --font-body:'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    /* RESET BASIQUE */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{font-family:var(--font-body);color:var(--ink);background:var(--blanc)}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    /* NAV */
+    .nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.86);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid rgba(233,210,186,.6);transition:box-shadow .25s ease, background .25s ease}
+    .nav.scrolled{background:rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand img{height:36px;width:auto}
+    .site-name{font-family:var(--font-head);font-weight:800;font-size:1.35rem;color:var(--brun-principal)}
+    .nav-links{display:none;gap:16px;align-items:center}
+    .nav-links a{padding:10px 12px;border-radius:12px;transition:background .2s ease, transform .12s ease}
+    /* hover & actif identiques */
+    .nav-links a:hover,
+    .nav-links a.active{background:linear-gradient(0deg, var(--creme), var(--creme));transform:translateY(-1px);border:none;box-shadow:none}
+    .menu-btn{border:0;background:transparent;font-size:22px;padding:8px;border-radius:12px}
+    .menu-btn:hover{background:linear-gradient(0deg, var(--creme), var(--creme))}
+    @media(min-width:960px){.nav-links{display:flex}.menu-btn{display:none}}
+
+    /* BOUTONS */
+    .btn{display:inline-flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:12px 18px;font-weight:800;letter-spacing:.2px;color:#fff;background:linear-gradient(135deg,var(--brun-principal),#7e4021 60%,var(--brun-principal));box-shadow:0 10px 28px rgba(146,80,39,.28);position:relative;overflow:hidden;transition:transform .18s ease}
+    .btn:hover{transform:translateY(-2px)}
+    .btn::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);transform:translateX(-100%)}
+    .btn::before{content:"";position:absolute;top:-120%;left:-150%;width:260%;height:340%;transform:rotate(25deg);background:linear-gradient( to right, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 50%, rgba(255,255,255,0) 100% );opacity:.0;transition:transform .7s ease, opacity .4s ease}
+    .btn:hover::before{transform:rotate(25deg) translateX(45%);opacity:.6}
+    .btn:hover::after{transition:transform .8s;transform:translateX(100%)}
+    .btn.secondary{background:#fff;color:var(--brun-principal);border:1px solid #ead7c2;box-shadow:0 8px 22px rgba(0,0,0,.06)}
+
+    /* TITRES / TEXTES */
+    h1,h2,h3{font-family:var(--font-head);color:var(--brun-principal);margin:0 0 8px}
+    h1{font-size:clamp(32px,4.5vw,56px);line-height:1.03}
+    h2{font-size:clamp(24px,3.2vw,36px)}
+    h3{font-size:20px}
+    .lead{color:#6c4f3b;font-size:clamp(15px,1.4vw,18px)}
+    .muted{color:#876e5e}
+
+    /* SECTIONS UTILITAIRES */
+    .section{padding:64px 0}
+    .card{background:#fff;border:1px solid #efdcc8;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);transition:transform .25s ease, box-shadow .25s ease}
+    .card:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.12)}
+    .grid-3{display:grid;gap:16px}
+    @media(min-width:980px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+
+    /* HERO */
+    .hero{position:relative;padding:90px 0 60px;overflow:hidden}
+    .hero .container{display:grid;gap:28px;align-items:center}
+    @media(min-width:980px){.hero .container{grid-template-columns:1.1fr .9fr}}
+
+    /* HERO SLIDER */
+    .hero-slider{position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);background:linear-gradient(180deg,#fff,#fff8f1)}
+    .hero-slider .hs-track{display:flex;transition:transform .55s ease}
+    .hero-slider .hs-slide{min-width:100%;position:relative}
+    .hero-slider .hs-slide img{width:100%;height:420px;object-fit:cover;display:block}
+    @media(max-width:680px){.hero-slider .hs-slide img{height:280px}}
+    .hero-slider .hs-btn{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.85);width:40px;height:40px;border-radius:999px;box-shadow:0 6px 16px rgba(0,0,0,.12);font-size:22px;cursor:pointer}
+    .hero-slider .hs-prev{left:10px}
+    .hero-slider .hs-next{right:10px}
+    .hero-slider .hs-btn:hover{background:#fff}
+    .hero-slider .hs-dots{position:absolute;left:0;right:0;bottom:10px;display:flex;justify-content:center;gap:8px}
+    .hero-slider .hs-dots button{width:8px;height:8px;border-radius:999px;border:0;background:#e7d4bf;cursor:pointer}
+    .hero-slider .hs-dots button.active{background:var(--brun-principal)}
+
+    /* BADGE */
+    .pill{display:inline-block;font-size:12px;font-weight:800;color:#5a3a2e;background:var(--peche);padding:6px 10px;border-radius:999px}
+
+    /* STATS */
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}}
+    .stat{text-align:center;background:#fff;border:1px solid #efdcc8;border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+    .stat .n{font-weight:900;font-size:22px}
+
+    /* ROUTER (pages) */
+    [data-route]{display:none}
+    [data-route].active{display:block}
+
+   /* CATALOGUE — fiche premium */
+.product-card{
+  display:grid;
+  grid-template-columns: 520px 1fr;
+  gap:28px;
+  align-items:center;
+  max-width:1100px;
+  margin:0 auto 24px;
+  padding:26px;
+  border:1px solid #f0ddc9;
+  border-radius:24px;
+  background:linear-gradient(180deg,#ffffff 0%, #fff9f2 100%);
+  box-shadow:0 18px 46px rgba(0,0,0,.06);
+}
+@media (max-width:980px){
+  .product-card{grid-template-columns:1fr; gap:18px}
+}
+
+/* Colonne image */
+.pc-media{
+  position:relative;
+  display:grid;
+  place-items:center;
+  padding:16px;
+  border-radius:20px;
+  background:radial-gradient(120% 90% at 50% 10%, rgba(250,218,178,.45), transparent 60%);
+  overflow:hidden;
+}
+.pc-media .badge{
+  position:absolute; top:12px; left:12px;
+  background:var(--peche); color:#4a2c1f;
+  padding:8px 12px; border-radius:999px; font-weight:800;
+  box-shadow:0 6px 16px rgba(0,0,0,.08)
+}
+.pc-media img{
+  width:auto; height:440px; object-fit:contain; display:block;
+  filter: drop-shadow(0 18px 36px rgba(0,0,0,.18));
+  transition: transform .35s ease, filter .35s ease;
+}
+.pc-media:hover img{ transform:translateY(-4px) scale(1.02) }
+@media (max-width:680px){ .pc-media img{height:300px} }
+
+/* Colonne texte */
+.pc-info h3{margin:0 0 10px; font-size:28px; color:var(--brun-principal)}
+.pc-sub{color:#6c4f3b; margin-bottom:12px}
+.pc-list{margin:0 0 14px 0; padding-left:18px; color:#6c4f3b}
+.pc-tags{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 16px}
+.pc-tag{font-size:12px; font-weight:800; color:#5a3a2e; background:var(--creme); border:1px solid #efdcc8; padding:6px 10px; border-radius:999px}
+.pc-cta{display:flex; gap:10px; flex-wrap:wrap}
+
+/* Onglets en haut (inchangés visuellement) */
+.tabs{position:sticky;top:62px;background:#fff;z-index:50;padding-top:8px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+@media(min-width:960px){.tabs{top:72px}}
+.tab{padding:8px 12px;border-radius:999px;border:1px solid #efdcc8;background:#fff;color:#5a3a2e;font-weight:700;cursor:pointer}
+.tab.active{background:var(--brun-principal);color:#fff;border-color:var(--brun-principal)}
+
+
+    /* FORM */
+    form{display:grid;gap:12px}
+    .row{display:grid;gap:12px}
+    @media(min-width:680px){.row{grid-template-columns:1fr 1fr}}
+    label{font-size:13px;color:#896a57}
+    input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid #efdcc8;background:#fff;font:inherit}
+    textarea{min-height:120px}
+    input,select,textarea{transition:border-color .2s ease, box-shadow .2s ease}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--peche);box-shadow:0 0 0 4px rgba(250,218,178,.35)}
+    #page-contact .card{background:linear-gradient(180deg,#ffffff 0%, #fff9f2 100%);border:1px solid #f0ddc9;box-shadow:0 16px 48px rgba(0,0,0,.08);padding:22px;border-radius:24px}
+    #page-contact button.btn{padding:14px 22px}
+
+    /* Footer */
+    footer{padding:48px 0;background:linear-gradient(180deg,#fff,#fff9f2);border-top:1px solid rgba(227,193,155,.5)}
+
+    /* Tabs */
+    .tabs{position:sticky;top:62px;background:#fff;z-index:50;padding-top:8px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+    @media(min-width:960px){.tabs{top:72px}}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 18px}
+    .tab{padding:8px 12px;border-radius:999px;border:1px solid #efdcc8;background:#fff;color:#5a3a2e;font-weight:700;cursor:pointer}
+    .tab.active{background:var(--brun-principal);color:#fff;border-color:var(--brun-principal)}
+
+    /* Témoignages */
+    .carousel{position:relative;overflow:hidden;border-radius:16px;border:1px solid #efdcc8;background:#fff}
+    .slides{display:flex;transition:transform .5s ease}
+    .slide{min-width:100%;padding:22px}
+    .dots{display:flex;gap:8px;justify-content:center;margin-top:10px}
+    .dot{width:8px;height:8px;border-radius:999px;background:#e7d4bf;cursor:pointer}
+    .dot.active{background:var(--brun-principal)}
+
+    /* CTA mobile */
+    .floating-cta{position:fixed;right:16px;bottom:16px;z-index:70}
+    @media(min-width:740px){.floating-cta{display:none}}
+
+    /* FAQ */
+    .faq-item{border:1px solid #efdcc8;border-radius:14px;padding:14px 16px;background:#fff;margin-bottom:10px}
+    .faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:800;color:var(--brun-principal)}
+    .faq-a{display:none;color:#6c4f3b;margin-top:8px}
+
+    /* Animations scroll */
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .65s ease, transform .65s ease}
+    .reveal.is-visible{opacity:1;transform:translateY(0)}
+    .tilt{transform-style:preserve-3d;perspective:900px}
+    .tilt-inner{transition:transform .35s ease}
+
+    /* ORBIT (rond central + côtés) */
+    .orbit{position:relative;display:grid;place-items:center;margin-top:12px}
+    .orbit .orbit-track{position:relative;height:260px;width:100%;max-width:980px}
+    .orbit-item{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);transition:transform .45s ease, opacity .45s ease, filter .45s ease}
+    .orbit{position:relative;display:grid;place-items:center;margin-top:12px}
+.orbit .orbit-track{position:relative;height:360px;width:100%;max-width:980px}
+.orbit-item{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);transition:transform .45s ease, opacity .45s ease, filter .45s ease}
+.orbit-item h3{margin-top:10px;text-align:center}
+.can img{
+  display:block;
+  height:260px; /* taille base */
+  width:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 14px 30px rgba(0,0,0,.15));
+  transition:transform .35s ease, filter .35s ease;
+}
+@media(max-width:900px){ .can img{height:220px} }
+
+/* positions */
+.orbit .pos-center{transform:translate(-50%,-50%) scale(1.08); z-index:3; opacity:1; filter:none}
+.orbit .pos-left  {transform:translate(calc(-50% - 260px),-50%) scale(.88); z-index:2; opacity:.65; filter:saturate(.88) blur(.2px)}
+.orbit .pos-right {transform:translate(calc(-50% + 260px),-50%) scale(.88); z-index:2; opacity:.65; filter:saturate(.88) blur(.2px)}
+.orbit .pos-out   {transform:translate(-50%,-50%) scale(.65); opacity:0; z-index:1}
+@media(max-width:900px){
+  .orbit .pos-left  {transform:translate(calc(-50% - 180px),-50%) scale(.9)}
+  .orbit .pos-right {transform:translate(calc(-50% + 180px),-50%) scale(.9)}
+}
+
+/* survol de la canette au centre */
+.orbit .pos-center.can img{transform:translateY(-2px)}
+/* Boutons de navigation ORBIT — visibles au survol uniquement */
+.orbit-btn{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:46px; height:46px; border-radius:999px;
+  border:1px solid #efdcc8; background:rgba(255,255,255,.9);
+  box-shadow:0 8px 22px rgba(0,0,0,.08);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; z-index:5;
+
+  /* cachés par défaut */
+  opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease;
+}
+.orbit:hover .orbit-btn{ opacity:1; pointer-events:auto } /* visibles au survol de la zone */
+.orbit-btn:hover{ transform:translateY(-50%) scale(1.04); background:#fff }
+
+.ob-prev{ left:-6px }
+.ob-next{ right:-6px }
+
+/* Petites flèches SVG (si tu les utilises) */
+.orbit-btn svg{ width:18px; height:18px; fill:#7b543c }
+
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" aria-label="Navigation principale">
+    <div class="container nav-inner">
+      <a class="brand" href="#/accueil" aria-label="Calincake – Accueil">
+        <img src="images/logo-calincake.png" alt="Logo Calincake" />
+        <span class="sr-only site-name">CalinCake</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#/accueil">Accueil</a>
+        <a href="#/catalogue">Catalogue</a>
+        <a href="#/contact">Contact</a>
+        <a href="#/apropos">À propos</a>
+        <a href="#/faq">FAQ</a>
+      </div>
+      <button class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu">☰</button>
+    </div>
+  </nav>
+
+  <!-- PAGE : ACCUEIL -->
+  <main id="page-accueil" data-route="/accueil">
+    <section class="hero">
+      <div class="container">
+        <div class="tilt">
+          <div class="tilt-inner">
+            <span class="pill">Nouveau format dessert</span>
+            <h1 class="reveal">Le can cake qui fait dire <em>« wow »</em> au premier regard.</h1>
+            <p class="lead reveal">Calincake, c’est le dessert en canette : ludique, généreux, et prêt à être savouré partout. Un visuel qui attire l’œil, un goût qui fidélise, et une présentation qui se remarque en vitrine comme sur les réseaux.</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px" class="reveal">
+              <a class="btn" href="#/catalogue">Voir le catalogue</a>
+              <a class="btn secondary" href="#/contact">Nous contacter</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO SLIDER -->
+        <div class="hero-slider reveal" id="heroSlider" aria-label="Visuels Calincake">
+          <div class="hs-track">
+            <div class="hs-slide"><img src="images/hero-calincake.png" alt="Calincake – présentation can cake"></div>
+            <div class="hs-slide"><img src="images/gout-chocolat.png" alt="Chocolat Intense"></div>
+            <div class="hs-slide"><img src="images/gout-vanille.png" alt="Vanille de Madagascar"></div>
+            <div class="hs-slide"><img src="images/gout-pistache.png" alt="Pistache Amande"></div>
+            <div class="hs-slide"><img src="images/gout-caramel.png" alt="Caramel Beurre Salé"></div>
+          </div>
+          <button class="hs-btn hs-prev" aria-label="Slide précédent">‹</button>
+          <button class="hs-btn hs-next" aria-label="Slide suivant">›</button>
+          <div class="hs-dots" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="reveal">Pourquoi ça plaît immédiatement</h2>
+        <p class="lead reveal">Un format fun qui déclenche l’achat d’impulsion, une dégustation généreuse, et un produit photogénique qui performe sur Instagram/TikTok.</p>
+        <div class="grid-3">
+          <div class="card reveal"><h3>Identité visuelle forte</h3><p>Étiquette soignée, couleurs chaleureuses, silhouette iconique : le can cake attire en vitrine.</p></div>
+          <div class="card reveal"><h3>Expérience gourmande</h3><p>Texture moelleuse, toppings généreux, parfums signature : un dessert qui marque.</p></div>
+          <div class="card reveal"><h3>Partageable & photogénique</h3><p>Parfait pour stories/reels et contenus UGC. On aime le montrer, on adore le goûter.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Goûts – ORBIT -->
+    <section class="section">
+      <div class="container">
+        <h2 class="reveal">Nos 4 goûts en un clin d'œil</h2>
+        <div class="orbit reveal" id="flavorOrbit">
+          <button class="orbit-btn ob-prev" aria-label="Goût précédent">
+  <svg viewBox="0 0 24 24"><path d="M15.5 19.5L8.5 12l7-7.5" stroke="#7b543c" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+         <div class="orbit-track">
+  <a class="can orbit-item" data-link="#/catalogue">
+    <img src="images/cans/chocolat.png" alt="Chocolat Intense">
+    <h3>Chocolat Intense</h3>
+  </a>
+  <a class="can orbit-item" data-link="#/catalogue">
+    <img src="images/cans/tiramisu.png" alt="Tiramisu – Spéculos & Caramel">
+    <h3>Tiramisu</h3>
+  </a>
+  <a class="can orbit-item" data-link="#/catalogue">
+    <img src="images/cans/fraisier.png" alt="Fraisier – Vanille de Madagascar">
+    <h3>Fraisier</h3>
+  </a>
+  <a class="can orbit-item" data-link="#/catalogue">
+    <img src="images/cans/oreo.png" alt="Oreo – Crème vanille">
+    <h3>Oreo</h3>
+  </a>
+</div>
+          <button class="orbit-btn ob-next" aria-label="Goût suivant">
+  <svg viewBox="0 0 24 24"><path d="M8.5 19.5L15.5 12l-7-7.5" stroke="#7b543c" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Témoignages -->
+    <section class="section">
+      <div class="container">
+        <div class="carousel reveal" id="testi">
+          <div class="slides">
+            <div class="slide">“Les can cakes Calincake ont boosté nos ventes dessert à emporter.” — Nina, coffee shop</div>
+            <div class="slide">“Visuel canon, zéro gâchis, nos clients en redemandent.” — Karim, hôtel</div>
+            <div class="slide">“Parfait en corner snacking, ça part tout seul.” — Léa, retail</div>
+          </div>
+        </div>
+        <div class="dots" id="dots"></div>
+      </div>
+    </section>
+
+    <!-- Chiffres clés -->
+    <section class="section">
+      <div class="container">
+        <div class="stats reveal">
+          <div class="stat"><div class="n">+120</div><div class="muted">points de vente</div></div>
+          <div class="stat"><div class="n">4</div><div class="muted">goûts signature</div></div>
+          <div class="stat"><div class="n">2</div><div class="muted">formats (180g / 250g)</div></div>
+          <div class="stat"><div class="n">98%</div><div class="muted">clients satisfaits</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PAGE : CATALOGUE -->
+  <main id="page-catalogue" data-route="/catalogue">
+ <section class="section">
+  <div class="container">
+    <h2 class="reveal">Catalogue Calincake</h2>
+    <p class="lead reveal">Nos 4 goûts signature, disponibles en 180 g et 250 g. Parfaits pour vitrine, corner snacking, minibar ou room‑service.</p>
+
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-target="g1">Chocolat Intense</button>
+      <button class="tab" data-target="g2">Vanille de Madagascar</button>
+      <button class="tab" data-target="g3">Pistache Amande</button>
+      <button class="tab" data-target="g4">Caramel Beurre Salé</button>
+    </div>
+
+    <!-- Chocolat -->
+    <div class="product-card reveal" id="g1">
+      <div class="pc-media">
+        <span class="badge">Chocolat Intense</span>
+        <img src="images/cans/chocolat.png" alt="Can cake Chocolat Intense">
+      </div>
+      <div class="pc-info">
+        <h3>Chocolat Intense</h3>
+        <div class="pc-sub">Crème praliné 70% cacao, cœur fondant chocolat noir</div>
+        <ul class="pc-list">
+          <li>Formats : 180 g / 250 g</li>
+          <li>Toppings : copeaux cacao, ganache</li>
+          <li>Allergènes : gluten, lait</li>
+        </ul>
+        <div class="pc-tags">
+          <span class="pc-tag">Best‑seller</span>
+          <span class="pc-tag">Photogénique</span>
+          <span class="pc-tag">Room‑service</span>
+        </div>
+        <div class="pc-cta">
+          <a class="btn" href="catalogue/Calincake-Catalogue-2025.pdf" download>PDF Produits</a>
+          <a class="btn secondary" href="#/contact">Demander un devis</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vanille -->
+    <div class="product-card reveal" id="g2" style="display:none">
+      <div class="pc-media">
+        <span class="badge">Vanille de Madagascar</span>
+        <img src="images/cans/fraisier.png" alt="Can cake Vanille de Madagascar">
+      </div>
+      <div class="pc-info">
+        <h3>Vanille de Madagascar</h3>
+        <div class="pc-sub">Biscuit vanille, chantilly légère, éclats de fève tonka</div>
+        <ul class="pc-list">
+          <li>Formats : 180 g / 250 g</li>
+          <li>Toppings : gousse vanille, perles sucre</li>
+          <li>Allergènes : gluten, lait, œufs</li>
+        </ul>
+        <div class="pc-tags">
+          <span class="pc-tag">Vitrine</span>
+          <span class="pc-tag">UGC‑friendly</span>
+        </div>
+        <div class="pc-cta">
+          <a class="btn" href="catalogue/Calincake-Catalogue-2025.pdf" download>PDF Produits</a>
+          <a class="btn secondary" href="#/contact">Demander un devis</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pistache -->
+    <div class="product-card reveal" id="g3" style="display:none">
+      <div class="pc-media">
+        <span class="badge">Pistache Amande</span>
+        <img src="images/cans/tiramisu.png" alt="Can cake Pistache Amande">
+      </div>
+      <div class="pc-info">
+        <h3>Pistache Amande</h3>
+        <div class="pc-sub">Crème pistache, praliné amande, éclats torréfiés</div>
+        <ul class="pc-list">
+          <li>Formats : 180 g / 250 g</li>
+          <li>Toppings : pralin, pistaches concassées</li>
+          <li>Allergènes : fruits à coque, lait</li>
+        </ul>
+        <div class="pc-tags">
+          <span class="pc-tag">Édition premium</span>
+        </div>
+        <div class="pc-cta">
+          <a class="btn" href="catalogue/Calincake-Catalogue-2025.pdf" download>PDF Produits</a>
+          <a class="btn secondary" href="#/contact">Demander un devis</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Caramel -->
+    <div class="product-card reveal" id="g4" style="display:none">
+      <div class="pc-media">
+        <span class="badge">Caramel Beurre Salé</span>
+        <img src="images/cans/oreo.png" alt="Can cake Caramel Beurre Salé">
+      </div>
+      <div class="pc-info">
+        <h3>Caramel Beurre Salé</h3>
+        <div class="pc-sub">Coulis caramel salé, crème onctueuse, fleur de sel</div>
+        <ul class="pc-list">
+          <li>Formats : 180 g / 250 g</li>
+          <li>Toppings : caramel ribbon, sel</li>
+          <li>Allergènes : lait, gluten</li>
+        </ul>
+        <div class="pc-tags">
+          <span class="pc-tag">Confort food</span>
+          <span class="pc-tag">Parfait minibar</span>
+        </div>
+        <div class="pc-cta">
+          <a class="btn" href="catalogue/Calincake-Catalogue-2025.pdf" download>PDF Produits</a>
+          <a class="btn secondary" href="#/contact">Demander un devis</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloc PDF global -->
+    <div class="card reveal" style="margin-top:28px">
+      <strong>Catalogue PDF</strong>
+      <p>Téléchargez le PDF (tarifs pro, fiches techniques, allergènes) :</p>
+      <p><a class="btn" href="catalogue/Calincake-Catalogue-2025.pdf" download>Télécharger</a></p>
+      <p class="muted" style="font-size:12px">Placez votre fichier à <code>/catalogue/Calincake-Catalogue-2025.pdf</code> sur votre hébergement.</p>
+    </div>
+  </div>
+</section>
+  </main>
+
+  <!-- PAGE : CONTACT -->
+  <main id="page-contact" data-route="/contact">
+    <section class="section">
+      <div class="container">
+        <h2 class="reveal">Contact distributeurs</h2>
+        <p class="lead reveal">Vous êtes coffee shop, hôtel ou distributeur ? Laissez-nous vos informations et nous vous recontactons rapidement.</p>
+
+        <div class="card reveal">
+          <form id="quoteForm" action="https://formspree.io/f/xxxxdemo" method="POST">
+            <div class="row">
+              <div>
+                <label for="name">Nom / Société</label>
+                <input id="name" name="name" type="text" placeholder="Ex. Nina – Café Du Pont" required />
+              </div>
+              <div>
+                <label for="email">Email professionnel</label>
+                <input id="email" name="email" type="email" placeholder="pro@entreprise.com" required />
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label for="type">Type d’établissement</label>
+                <select id="type" name="type" required>
+                  <option value="">Sélectionner…</option>
+                  <option>Coffee shop</option>
+                  <option>Hôtel</option>
+                  <option>Grande distribution</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              <div>
+                <label for="city">Ville / Code postal</label>
+                <input id="city" name="city" type="text" placeholder="Paris 75010" />
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label for="volume">Volume mensuel estimé</label>
+                <select id="volume" name="volume" required>
+                  <option value="">Sélectionner…</option>
+                  <option>60–120 unités</option>
+                  <option>120–300 unités</option>
+                  <option>300–600 unités</option>
+                  <option>600+ unités</option>
+                </select>
+              </div>
+              <div>
+                <label for="format">Format préféré</label>
+                <select id="format" name="format">
+                  <option>180 g</option>
+                  <option>250 g</option>
+                  <option>Mix 180/250 g</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Parlez-nous de vos besoins, périodes de vente, personnalisation étiquettes…"></textarea>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+              <button class="btn" type="submit">Envoyer</button>
+              <span id="formNote" class="muted" role="status" aria-live="polite"></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PAGE : À PROPOS -->
+  <main id="page-apropos" data-route="/apropos">
+    <section class="section">
+      <div class="container">
+        <h2 class="reveal">À propos de Calincake</h2>
+        <p class="lead reveal">Né d’une envie simple : offrir un dessert qui surprend par sa forme et régale par son goût. Nous créons des recettes généreuses, avec une identité forte et une présentation impeccable.</p>
+        <div class="grid-3">
+          <div class="card reveal"><h3>Qualité</h3><p>Ingrédients sélectionnés, recettes testées et approuvées.</p></div>
+          <div class="card reveal"><h3>Créativité</h3><p>Formats, étiquettes et éditions limitées qui marquent.</p></div>
+          <div class="card reveal"><h3>Partenariats</h3><p>Nous co‑créons avec coffee shops et acteurs du snacking.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PAGE : FAQ -->
+  <main id="page-faq" data-route="/faq">
+    <section class="section">
+      <div class="container">
+        <h2 class="reveal">FAQ</h2>
+        <div class="faq-item reveal">
+          <div class="faq-q">Qu’est‑ce qu’un can cake ?<span>＋</span></div>
+          <div class="faq-a">Un dessert présenté en canette, visuel et généreux, pensé pour être repéré en vitrine et partagé sur les réseaux.</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q">Quels sont les formats et les goûts ?<span>＋</span></div>
+          <div class="faq-a">Deux formats (180 g et 250 g) et quatre goûts signature : Chocolat Intense, Vanille de Madagascar, Pistache Amande, Caramel Beurre Salé.</div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-q">Peut‑on personnaliser les étiquettes ?<span>＋</span></div>
+          <div class="faq-a">Oui, personnalisation possible (MOQ flexible) afin d’intégrer votre identité visuelle.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container fgrid">
+      <div>
+        <div class="brand" style="margin-bottom:8px">
+          <img src="images/logo-calincake.png" alt="Logo Calincake" />
+          <span class="sr-only site-name">CalinCake</span>
+        </div>
+        <div class="muted">Desserts en canette – Accueil, Catalogue, Contact, À propos, FAQ.</div>
+      </div>
+      <div>
+        <div>Contact : <a href="mailto:contact@calincake.com">contact@calincake.com</a></div>
+        <div>Instagram : <a href="#">@calincake</a></div>
+        <div class="muted">© <span id="year"></span> Calincake. Tous droits réservés.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CTA flottant (mobile) -->
+  <a href="#/contact" class="btn floating-cta">Devis</a>
+
+  <!-- JS -->
+  <script>
+    // Router
+    const routes = {
+      '/accueil': document.getElementById('page-accueil'),
+      '/catalogue': document.getElementById('page-catalogue'),
+      '/contact': document.getElementById('page-contact'),
+      '/apropos': document.getElementById('page-apropos'),
+      '/faq': document.getElementById('page-faq'),
+    };
+    function setRoute(hash){
+      const path = (hash || '#/accueil').replace('#','');
+      Object.values(routes).forEach(s => s.classList.remove('active'));
+      (routes[path] || routes['/accueil']).classList.add('active');
+      window.scrollTo({top:0,behavior:'instant'});
+      revealAll();
+      markActiveLink(path);
+    }
+    function markActiveLink(path){
+      document.querySelectorAll('.nav-links a').forEach(a=>{
+        const isActive = a.getAttribute('href') === '#'+path;
+        a.classList.toggle('active', isActive);
+        a.style.textDecoration = 'none';
+        a.style.fontWeight = '700';
+      });
+    }
+    window.addEventListener('hashchange',()=>setRoute(location.hash));
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn?.addEventListener('click',()=> navLinks.style.display = navLinks.style.display==='flex' ? 'none' : 'flex');
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Placeholder images si erreur
+    document.querySelectorAll('img').forEach(img=>{
+      img.addEventListener('error',()=>{
+        img.style.display='none';
+        const ph = document.createElement('div');
+        ph.className='card muted';
+        ph.style.height='240px';
+        ph.style.display='grid';
+        ph.style.placeItems='center';
+        ph.textContent = "Placez l'image : " + img.getAttribute('src');
+        img.parentNode?.insertBefore(ph, img.nextSibling);
+      });
+    });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target);} }); },{threshold:.14});
+    function revealAll(){
+      const items = Array.from(document.querySelectorAll('.reveal'));
+      items.forEach((el,i)=>{
+        el.classList.remove('is-visible');
+        el.style.transitionDelay = (i*60)+'ms';
+        io.observe(el);
+      });
+    }
+
+    // Subtle tilt
+    const tilt = document.querySelector('.tilt');
+    if(tilt){
+      const inner = tilt.querySelector('.tilt-inner');
+      tilt.addEventListener('mousemove',(e)=>{
+        const r = tilt.getBoundingClientRect();
+        const cx = e.clientX - r.left; const cy = e.clientY - r.top;
+        const rx = ((cy/r.height)-.5)*-8; const ry = ((cx/r.width)-.5)*8;
+        inner.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      });
+      tilt.addEventListener('mouseleave',()=> inner.style.transform = 'rotateX(0) rotateY(0)');
+    }
+
+    // Nav shadow
+    const nav = document.querySelector('.nav');
+    const onScroll = ()=>{
+      if(!nav) return;
+      if(window.scrollY>4){ nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); }
+    };
+    window.addEventListener('scroll', onScroll); onScroll();
+
+    // Tabs catalogue
+    const tabs = document.getElementById('tabs');
+    if(tabs){
+      tabs.addEventListener('click', (e)=>{
+        const btn = e.target.closest('.tab');
+        if(!btn) return;
+        tabs.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.dataset.target;
+        ['g1','g2','g3','g4'].forEach(id=>{
+          const el = document.getElementById(id);
+          el.style.display = (id===target)?'grid':'none';
+        });
+      });
+    }
+
+    // Témoignages slider auto
+    const slider = document.querySelector('#testi .slides');
+    const dotsWrap = document.getElementById('dots');
+    if(slider && dotsWrap){
+      const total = slider.children.length;
+      let idx = 0;
+      function renderDots(){
+        dotsWrap.innerHTML = '';
+        for(let i=0;i<total;i++){
+          const d = document.createElement('div');
+          d.className = 'dot'+(i===idx?' active':'');
+          d.addEventListener('click',()=>{ idx=i; update(); });
+          dotsWrap.appendChild(d);
+        }
+      }
+      function update(){
+        slider.style.transform = `translateX(-${idx*100}%)`;
+        renderDots();
+      }
+      renderDots();
+      setInterval(()=>{ idx=(idx+1)%total; update(); }, 4500);
+    }
+
+    // HERO SLIDER (auto + boutons + dots)
+    (function(){
+      const wrap = document.getElementById('heroSlider');
+      if(!wrap) return;
+      const track = wrap.querySelector('.hs-track');
+      const slides = Array.from(wrap.querySelectorAll('.hs-slide'));
+      const dotsWrap = wrap.querySelector('.hs-dots');
+      let i = 0, auto;
+
+      function render(){
+        track.style.transform = `translateX(-${i*100}%)`;
+        dotsWrap.querySelectorAll('button').forEach((b,idx)=>b.classList.toggle('active', idx===i));
+      }
+      slides.forEach((_,idx)=>{
+        const b = document.createElement('button');
+        b.addEventListener('click',()=>{ i=idx; render(); restart(); });
+        dotsWrap.appendChild(b);
+      });
+      function next(step=1){ i=(i+step+slides.length)%slides.length; render(); }
+      function restart(){ clearInterval(auto); auto = setInterval(next, 4000); }
+      wrap.querySelector('.hs-prev').addEventListener('click',()=>{ next(-1); restart(); });
+      wrap.querySelector('.hs-next').addEventListener('click',()=>{ next(1); restart(); });
+
+      render(); restart();
+    })();
+
+    // ORBIT CAROUSEL
+    (function(){
+      const root = document.getElementById('flavorOrbit'); if(!root) return;
+      const items = Array.from(root.querySelectorAll('.orbit-item'));
+      const linkTo = (el)=>{ const href = el.dataset.link; if(href) location.hash = href; };
+
+      let idx = 0, auto;
+      function layout(){
+        items.forEach((el,i)=>{
+          el.classList.remove('pos-center','pos-left','pos-right','pos-out');
+          const rel = (i - idx + items.length) % items.length;
+          if(rel===0) el.classList.add('pos-center');
+          else if(rel===1) el.classList.add('pos-right');
+          else if(rel===items.length-1) el.classList.add('pos-left');
+          else el.classList.add('pos-out');
+        });
+      }
+      function next(step=1){ idx=(idx+step+items.length)%items.length; layout(); }
+      function restart(){ clearInterval(auto); auto=setInterval(next,3500); }
+
+      root.querySelector('.ob-prev').addEventListener('click',()=>{ next(-1); restart(); });
+      root.querySelector('.ob-next').addEventListener('click',()=>{ next(1); restart(); });
+      root.addEventListener('click',(e)=>{ const center = root.querySelector('.pos-center'); if(center && (center.contains(e.target))) linkTo(center); });
+
+      layout(); restart();
+    })();
+
+    // FAQ accordéon
+    document.querySelectorAll('.faq-item').forEach(item=>{
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a');
+      q.addEventListener('click', ()=>{
+        const open = a.style.display === 'block';
+        a.style.display = open ? 'none' : 'block';
+        q.querySelector('span').textContent = open ? '＋' : '－';
+      });
+    });
+
+    // Init
+    setRoute(location.hash);
+  </script>
+</body>
+</html>

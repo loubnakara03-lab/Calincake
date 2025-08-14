@@ -1,0 +1,125 @@
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  background: #FEEDD3;
+  color: #925027;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5%;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #925027;
+  font-weight: 600;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px 5%;
+  background: #FEEDD3;
+}
+
+.hero-content {
+  max-width: 50%;
+}
+
+.hero img {
+  max-width: 40%;
+  border-radius: 15px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #925027;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #A9754F;
+}
+
+.catalogue-items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px 5%;
+}
+
+.catalogue .item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.contact form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: auto;
+}
+
+.contact input, .contact textarea {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #C29A78;
+  border-radius: 5px;
+}
+
+.faq {
+  padding: 20px 5%;
+}
+
+.faq-item {
+  margin-bottom: 10px;
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  background: #E3C19B;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.faq-answer {
+  display: none;
+  padding: 10px;
+  background: #FADAB2;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  background: white;
+  font-size: 0.9em;
+}
