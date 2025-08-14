@@ -1,9 +1,9 @@
 backend:
   name: github
-  repo: <TON-USER>/<TON-REPO>   # ex: calincake-org/site
+  repo: <loubnakara03-lab>/<Calincake>   # ex: calincake-org/site
   branch: main
   auth_type: implicit
-  app_id: <CLIENT_ID>           # Client ID de ton OAuth App GitHub
+  app_id: <Ov23lix124AXPZLVc85i>           # Client ID de ton OAuth App GitHub
 
 media_folder: "images/uploads"   # (dans /site)
 public_folder: "/images/uploads" # URL publique
