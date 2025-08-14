@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Calincake — Admin</title>
+    <style>
+      body{font-family:system-ui,arial,sans-serif;margin:0;padding:24px;color:#333}
+      .loading{opacity:.7}
+      #error{color:#b00020;margin-top:12px;white-space:pre-wrap}
+    </style>
+  </head>
+  <body>
+    <div class="loading">Chargement du CMS…</div>
+
+    <!-- Widget d'authentification Netlify Identity -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- Netlify CMS -->
+    <script src="https://unpkg.com/netlify-cms@^2.0/dist/netlify-cms.js"
+            onload="document.querySelector('.loading').remove()"
+            onerror="document.body.insertAdjacentHTML('beforeend','<div id=error>Erreur : impossible de charger Netlify CMS (unpkg). Vérifie ta connexion réseau.</div>')">
+    </script>
+
+    <script>
+      // (facultatif) Ouvre le login si l’utilisateur vient d’être invité
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', user => {
+          if (!user) window.netlifyIdentity.on('login', () => window.location.reload());
+        });
+      }
+    </script>
+  </body>
+</html>
