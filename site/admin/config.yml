@@ -1,0 +1,23 @@
+backend:
+  name: github
+  repo: <TON-USER>/<TON-REPO>   # ex: calincake-org/site
+  branch: main
+  auth_type: implicit
+  app_id: <CLIENT_ID>           # Client ID de ton OAuth App GitHub
+
+media_folder: "images/uploads"   # (dans /site)
+public_folder: "/images/uploads" # URL publique
+
+# Une première collection simple pour valider que tout marche
+collections:
+  - name: "settings"
+    label: "Paramètres du site"
+    editor:
+      preview: false
+    files:
+      - file: "data/settings.json"
+        label: "Réglages généraux"
+        name: "general"
+        fields:
+          - { label: "Email contact", name: "contact_email", widget: "string", default: "contact@calincake.com" }
+          - { label: "Instagram", name: "instagram", widget: "string", default: "@calincake" }
