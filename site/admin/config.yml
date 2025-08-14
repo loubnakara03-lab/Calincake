@@ -1,12 +1,11 @@
 backend:
-  name: github
-  repo: <loubnakara03-lab>/<Calincake>   # ex: calincake-org/site
+  name: git-gateway
   branch: main
-  auth_type: implicit
-  app_id: <Ov23lix124AXPZLVc85i>           # Client ID de ton OAuth App GitHub
 
-media_folder: "images/uploads"   # (dans /site)
-public_folder: "/images/uploads" # URL publique
+site_url: "https://calincake.netlify.app"
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
 
 # Une première collection simple pour valider que tout marche
 collections:
